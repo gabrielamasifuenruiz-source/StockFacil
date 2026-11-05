@@ -1,0 +1,231 @@
+/* Layout de StockFácil: menú lateral + encabezado (maqueta 02 · Resumen) */
+
+:root {
+  --sf-primario: #0b6662;
+  --sf-texto: #132b2b;
+  --sf-suave: #6b7e7b;
+  --sf-borde: #dce6e2;
+  --sf-fondo: #f5f9f7;
+  --sf-menta: #eaf3f0;
+  --sf-barra: #6f9f98;
+  --sf-aviso: #d99552;
+  --sf-peligro: #c85c5c;
+  --sf-pista: #eef2f0;
+  --sf-encabezado-tabla: #f8fbf9;
+}
+
+.app-shell {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background: var(--sf-fondo);
+  color: var(--sf-texto);
+  font-family: Inter, 'Segoe UI', Arial, sans-serif;
+  text-align: left;
+}
+
+.app-shell *,
+.app-shell *::before,
+.app-shell *::after {
+  box-sizing: border-box;
+}
+
+.app-shell button {
+  font-family: inherit;
+}
+
+/* ---------- Menú lateral ---------- */
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  flex: 0 0 232px;
+  width: 232px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0 14px 22px;
+  background: #fdfefe;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  height: 62px;
+  margin: 0 6px;
+  padding: 10px 6px 0;
+  border-bottom: 1px solid var(--sf-borde);
+}
+
+.sidebar-logo-sf {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--sf-primario);
+}
+
+.sidebar-logo-nombre {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 16px;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  height: 38px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--sf-texto);
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sidebar-item:hover {
+  background: #f1f7f5;
+}
+
+.sidebar-item:focus-visible {
+  outline: 2px solid var(--sf-primario);
+  outline-offset: 2px;
+}
+
+.sidebar-item.activo {
+  background: var(--sf-menta);
+  color: var(--sf-primario);
+  font-weight: 600;
+}
+
+.sidebar-icono {
+  width: 28px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--sf-suave);
+}
+
+.sidebar-item.activo .sidebar-icono {
+  color: var(--sf-primario);
+}
+
+.sidebar-plan {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: auto 2px 0;
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--sf-fondo);
+}
+
+.sidebar-plan-etiqueta {
+  font-size: 11px;
+  color: var(--sf-suave);
+}
+
+.sidebar-plan-nombre {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ---------- Contenido y encabezado ---------- */
+
+.main {
+  flex: 1;
+  min-width: 0;
+  padding: 22px 42px 40px 32px;
+}
+
+.topbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.topbar p {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: var(--sf-suave);
+}
+
+.usuario {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.usuario-avatar {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--sf-borde);
+  border-radius: 12px;
+  background: #fff;
+  font-size: 20px;
+  color: var(--sf-primario);
+}
+
+.usuario-nombre {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.usuario-rol {
+  display: block;
+  margin-top: 2px;
+  font-size: 10px;
+  color: var(--sf-suave);
+}
+
+/* ---------- Tablet: menú solo con íconos ---------- */
+
+@media (max-width: 900px) {
+  .sidebar {
+    flex-basis: 76px;
+    width: 76px;
+  }
+
+  .sidebar-texto,
+  .sidebar-plan {
+    display: none;
+  }
+
+  .sidebar-logo {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .sidebar-item {
+    justify-content: center;
+    padding: 0;
+  }
+
+  .sidebar-icono {
+    width: auto;
+  }
+
+  .main {
+    padding: 22px 24px 32px;
+  }
+}

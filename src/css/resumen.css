@@ -1,0 +1,223 @@
+/* Pantalla Resumen (maqueta 02): tarjetas, gráfico de ventas, distribución de stock y actividad */
+
+.resumen {
+  display: grid;
+  gap: 24px;
+  max-width: 1240px;
+}
+
+.resumen-estado {
+  margin: 0;
+  font-size: 13px;
+  color: var(--sf-suave);
+}
+
+.resumen-estado.error {
+  color: var(--sf-peligro);
+}
+
+.tarjeta {
+  background: #fff;
+  border: 1px solid var(--sf-borde);
+  border-radius: 12px;
+}
+
+/* ---------- Tarjetas de indicadores ---------- */
+
+.kpis {
+  display: grid;
+  grid-template-columns: 225fr 225fr 225fr 245fr;
+  gap: 18px;
+}
+
+.kpi {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 112px;
+  padding: 16px 18px;
+}
+
+.kpi-etiqueta {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--sf-suave);
+}
+
+.kpi-valor {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.kpi-detalle {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--sf-primario);
+}
+
+.kpi-detalle.aviso {
+  color: var(--sf-aviso);
+}
+
+/* ---------- Gráfico y distribución ---------- */
+
+.paneles {
+  display: grid;
+  grid-template-columns: 600fr 354fr;
+  gap: 20px;
+}
+
+.panel {
+  padding: 22px;
+}
+
+.panel-grafico,
+.panel-distribucion {
+  height: 300px;
+}
+
+.panel-titulo {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.panel-subtitulo {
+  margin: 4px 0 0;
+  font-size: 11px;
+  color: var(--sf-suave);
+}
+
+.barras {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  align-items: end;
+  height: 145px;
+  margin-top: 48px;
+}
+
+.barra-col {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 100%;
+}
+
+.barra {
+  width: 34px;
+  min-height: 4px;
+  border-radius: 6px;
+  background: var(--sf-barra);
+}
+
+.barra-dia {
+  position: absolute;
+  top: 100%;
+  margin-top: 10px;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--sf-suave);
+}
+
+.distribucion {
+  display: grid;
+  gap: 23px;
+  margin-top: 40px;
+}
+
+.dist-item {
+  padding-right: 36px;
+}
+
+.dist-cabecera {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+
+.dist-etiqueta {
+  font-weight: 500;
+}
+
+.dist-porcentaje {
+  font-weight: 600;
+}
+
+.dist-pista {
+  width: 86%;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--sf-pista);
+  overflow: hidden;
+}
+
+.dist-relleno {
+  height: 100%;
+  border-radius: 4px;
+  background: var(--sf-barra);
+}
+
+.dist-relleno.aviso {
+  background: var(--sf-aviso);
+}
+
+.dist-relleno.peligro {
+  background: var(--sf-peligro);
+}
+
+/* ---------- Actividad reciente ---------- */
+
+.panel-actividad {
+  min-height: 280px;
+}
+
+.panel-actividad .panel-titulo {
+  margin-bottom: 16px;
+}
+
+.tabla-scroll {
+  overflow-x: auto;
+}
+
+.tabla {
+  min-width: 720px;
+}
+
+.tabla-fila {
+  display: grid;
+  grid-template-columns: 210fr 155fr 165fr 170fr 220fr;
+  align-items: center;
+  height: 52px;
+  padding: 0 10px;
+  border-bottom: 1px solid var(--sf-borde);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.tabla-fila:last-child {
+  border-bottom: 0;
+}
+
+.tabla-fila.encabezado {
+  height: 42px;
+  border-radius: 7px 7px 0 0;
+  background: var(--sf-encabezado-tabla);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--sf-suave);
+}
+
+/* ---------- Tablet ---------- */
+
+@media (max-width: 1100px) {
+  .kpis {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .paneles {
+    grid-template-columns: 1fr;
+  }
+}
