@@ -6,7 +6,7 @@ const MIN_PASSWORD = 12;
 
 // TODO: reemplazar por la llamada real al backend (carpeta service)
 async function loginRequest(email, password) {
-  await new Promise((r) => setTdemo@stockfacil.comimeout(r, 600));
+await new Promise((r) => setTimeout(r, 600));
   return email === "demo@stockfacil.com" && password === "stockfacil-2026";
 }
 
@@ -41,10 +41,10 @@ export default function Login({ onLogin }) {
     try {
       const ok = await loginRequest(email.trim(), password);
       if (!ok) {
-        setFormError("Email o contraseña incorrectos.");
+      setFormError("Email o contraseña incorrectos.");
       } else {
         onLogin();
-    }
+       }
     } catch {
       setFormError("No pudimos conectar. Intentá de nuevo.");
     } finally {

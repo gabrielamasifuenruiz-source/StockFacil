@@ -1,223 +1,206 @@
-/* Pantalla Resumen (maqueta 02): tarjetas, gráfico de ventas, distribución de stock y actividad */
-
 .resumen {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 24px;
-  max-width: 1240px;
 }
 
-.resumen-estado {
+.resumen h1 {
   margin: 0;
+  font-size: 28px;
+}
+
+.resumen h2 {
+  margin: 0;
+  font-size: 17px;
+}
+
+/* Encabezado */
+.resumen-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.resumen-header p {
+  margin: 6px 0 0;
   font-size: 13px;
-  color: var(--sf-suave);
+  color: #6b7e7b;
 }
 
-.resumen-estado.error {
-  color: var(--sf-peligro);
+.resumen-usuario {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.tarjeta {
+.resumen-usuario div:last-child {
+  display: flex;
+  flex-direction: column;
+}
+
+.resumen-usuario strong {
+  font-size: 13px;
+}
+
+.resumen-usuario small {
+  font-size: 11px;
+  color: #6b7e7b;
+}
+
+.resumen-avatar {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: #fff;
-  border: 1px solid var(--sf-borde);
+  border: 1px solid #dce6e2;
   border-radius: 12px;
+  color: #0b6662;
+  font-size: 18px;
 }
 
-/* ---------- Tarjetas de indicadores ---------- */
+/* Tarjetas base */
+.card {
+  background: #fff;
+  border: 1px solid #dce6e2;
+  border-radius: 14px;
+  padding: 22px;
+  box-sizing: border-box;
+}
 
-.kpis {
+.card-sub {
+  display: block;
+  margin-top: 6px;
+  font-size: 11px;
+  color: #6b7e7b;
+}
+
+/* Tarjetas de arriba */
+.resumen-tarjetas {
   display: grid;
-  grid-template-columns: 225fr 225fr 225fr 245fr;
+  grid-template-columns: repeat(4, 1fr);
   gap: 18px;
 }
 
-.kpi {
+.resumen-tarjetas .card {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 112px;
-  padding: 16px 18px;
+  gap: 8px;
+  padding: 18px;
 }
 
-.kpi-etiqueta {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--sf-suave);
+.tarjeta-titulo {
+  font-size: 13px;
+  color: #6b7e7b;
 }
 
-.kpi-valor {
-  font-size: 26px;
-  font-weight: 700;
-  line-height: 1.1;
-}
-
-.kpi-detalle {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--sf-primario);
-}
-
-.kpi-detalle.aviso {
-  color: var(--sf-aviso);
-}
-
-/* ---------- Gráfico y distribución ---------- */
-
-.paneles {
-  display: grid;
-  grid-template-columns: 600fr 354fr;
-  gap: 20px;
-}
-
-.panel {
-  padding: 22px;
-}
-
-.panel-grafico,
-.panel-distribucion {
-  height: 300px;
-}
-
-.panel-titulo {
-  margin: 0;
-  font-size: 16px;
+.tarjeta-valor {
+  font-size: 28px;
   font-weight: 700;
 }
 
-.panel-subtitulo {
-  margin: 4px 0 0;
+.tarjeta-nota {
   font-size: 11px;
-  color: var(--sf-suave);
+  font-weight: 700;
+  color: #0b6662;
 }
 
-.barras {
+.tarjeta-nota.alerta {
+  color: #d9a05b;
+}
+
+/* Gráfico + distribución */
+.resumen-fila {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  align-items: end;
-  height: 145px;
-  margin-top: 48px;
+  grid-template-columns: 1.7fr 1fr;
+  gap: 18px;
 }
 
-.barra-col {
-  position: relative;
+.grafico {
   display: flex;
   align-items: flex-end;
-  justify-content: center;
+  justify-content: space-around;
+  height: 190px;
+  margin-top: 24px;
+}
+
+.grafico-col {
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  color: #6b7e7b;
 }
 
-.barra {
+.grafico-barra {
   width: 34px;
-  min-height: 4px;
+  background: #6f9f98;
   border-radius: 6px;
-  background: var(--sf-barra);
 }
 
-.barra-dia {
-  position: absolute;
-  top: 100%;
-  margin-top: 10px;
-  font-size: 10px;
-  font-weight: 500;
-  color: var(--sf-suave);
+/* Distribución de stock */
+.stock-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 34px;
 }
 
-.distribucion {
-  display: grid;
-  gap: 23px;
-  margin-top: 40px;
-}
-
-.dist-item {
-  padding-right: 36px;
-}
-
-.dist-cabecera {
+.stock-texto {
   display: flex;
   justify-content: space-between;
   margin-bottom: 8px;
-  font-size: 12px;
+  font-size: 13px;
 }
 
-.dist-etiqueta {
-  font-weight: 500;
-}
-
-.dist-porcentaje {
-  font-weight: 600;
-}
-
-.dist-pista {
-  width: 86%;
+.stock-pista {
   height: 8px;
-  border-radius: 4px;
-  background: var(--sf-pista);
+  background: #eef3f1;
+  border-radius: 999px;
   overflow: hidden;
 }
 
-.dist-relleno {
+.stock-relleno {
   height: 100%;
-  border-radius: 4px;
-  background: var(--sf-barra);
+  border-radius: 999px;
 }
 
-.dist-relleno.aviso {
-  background: var(--sf-aviso);
-}
-
-.dist-relleno.peligro {
-  background: var(--sf-peligro);
-}
-
-/* ---------- Actividad reciente ---------- */
-
-.panel-actividad {
-  min-height: 280px;
-}
-
-.panel-actividad .panel-titulo {
-  margin-bottom: 16px;
-}
-
-.tabla-scroll {
-  overflow-x: auto;
-}
-
+/* Tabla */
 .tabla {
-  min-width: 720px;
+  width: 100%;
+  margin-top: 18px;
+  border-collapse: collapse;
+  font-size: 13px;
 }
 
-.tabla-fila {
-  display: grid;
-  grid-template-columns: 210fr 155fr 165fr 170fr 220fr;
-  align-items: center;
-  height: 52px;
-  padding: 0 10px;
-  border-bottom: 1px solid var(--sf-borde);
+.tabla th {
+  padding: 12px 10px;
+  background: #f1f6f4;
   font-size: 11px;
-  font-weight: 500;
+  font-weight: 700;
+  color: #6b7e7b;
+  text-align: left;
 }
 
-.tabla-fila:last-child {
-  border-bottom: 0;
+.tabla td {
+  padding: 16px 10px;
+  border-bottom: 1px solid #e6eeeb;
 }
 
-.tabla-fila.encabezado {
-  height: 42px;
-  border-radius: 7px 7px 0 0;
-  background: var(--sf-encabezado-tabla);
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--sf-suave);
+.tabla tr:last-child td {
+  border-bottom: none;
 }
 
-/* ---------- Tablet ---------- */
-
-@media (max-width: 1100px) {
-  .kpis {
-    grid-template-columns: 1fr 1fr;
+/* Pantallas pequeñas */
+@media (max-width: 1000px) {
+  .resumen-tarjetas {
+    grid-template-columns: repeat(2, 1fr);
   }
-
-  .paneles {
+  .resumen-fila {
     grid-template-columns: 1fr;
   }
 }

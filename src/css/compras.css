@@ -1,0 +1,286 @@
+.compras-pagina,
+.compras-pagina * {
+  box-sizing: border-box;
+}
+
+.compras-pagina {
+  width: 100%;
+  min-width: 0;
+  min-height: 100vh;
+  padding: 24px 32px 48px;
+  background: #f4f9f7;
+  color: #193334;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.compras-cabecera {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.compras-cabecera h1 {
+  margin: 0 0 7px;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.compras-cabecera p {
+  margin: 0;
+  color: #738987;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.compras-usuario {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.compras-avatar {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border: 1px solid #dce7e3;
+  border-radius: 13px;
+  background: #fff;
+  color: #007575;
+}
+
+.compras-usuario strong,
+.compras-usuario small {
+  display: block;
+}
+
+.compras-usuario strong {
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+
+.compras-usuario small {
+  color: #738987;
+  font-size: 11px;
+}
+
+.compras-tarjeta {
+  min-height: calc(100vh - 155px);
+  padding: 22px;
+  border: 1px solid #dce7e3;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.compras-tarjeta h2 {
+  margin: 0 0 25px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.compras-herramientas {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 17px;
+}
+
+.compras-buscador {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 332px;
+  max-width: 100%;
+  height: 39px;
+  padding: 0 14px;
+  border: 1px solid #dce7e3;
+  border-radius: 9px;
+  background: #f4f9f7;
+  color: #738987;
+}
+
+.compras-buscador svg {
+  flex-shrink: 0;
+}
+
+.compras-buscador:focus-within {
+  border-color: #6f9e98;
+  outline: 2px solid #e8f3ef;
+}
+
+.compras-buscador input {
+  width: 100%;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #193334;
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.compras-buscador input::placeholder {
+  color: #738987;
+}
+
+.compras-filtrar,
+.compras-selector {
+  min-height: 39px;
+  padding: 0 22px;
+  border: 1px solid #dce7e3;
+  border-radius: 9px;
+  background: #fff;
+  color: #006d70;
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.compras-filtrar {
+  min-width: 98px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.compras-filtrar:hover {
+  background: #e9f3ef;
+}
+
+.compras-filtrar:focus-visible,
+.compras-selector:focus-visible {
+  outline: 2px solid #6f9e98;
+  outline-offset: 3px;
+}
+
+.compras-tabla-contenedor {
+  overflow-x: auto;
+}
+
+.compras-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 12px;
+}
+
+.compras-tabla thead {
+  background: #f6faf8;
+}
+
+.compras-tabla th {
+  height: 43px;
+  padding: 12px 10px;
+  border-bottom: 1px solid #e3ece8;
+  color: #718683;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.compras-tabla th:first-child {
+  width: 13%;
+  border-top-left-radius: 9px;
+}
+
+.compras-tabla th:nth-child(2) {
+  width: 15%;
+}
+
+.compras-tabla th:nth-child(3) {
+  width: 23%;
+}
+
+.compras-tabla th:nth-child(4) {
+  width: 11%;
+}
+
+.compras-tabla th:nth-child(5) {
+  width: 15%;
+}
+
+.compras-tabla th:last-child {
+  border-top-right-radius: 9px;
+}
+
+.compras-tabla td {
+  height: 52px;
+  padding: 12px 10px;
+  border-bottom: 1px solid #e3ece8;
+}
+
+.compras-tabla td:nth-child(2),
+.compras-tabla td:nth-child(5) {
+  white-space: nowrap;
+}
+
+.compras-tabla tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.compras-tabla tbody tr:hover {
+  background: #fbfdfc;
+}
+
+.compras-estado {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 75px;
+  padding: 6px 15px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.compras-recibida {
+  background: #e9f3ef;
+  color: #278d72;
+}
+
+.compras-transito {
+  background: #fff3e5;
+  color: #db923c;
+}
+
+.compras-pendiente {
+  background: #eff2f1;
+  color: #718683;
+}
+
+.compras-tabla .compras-vacio {
+  padding: 30px 10px;
+  text-align: center;
+  color: #738987;
+}
+
+@media (max-width: 768px) {
+  .compras-pagina {
+    padding: 20px 16px;
+  }
+
+  .compras-cabecera h1 {
+    font-size: 24px;
+  }
+
+  .compras-usuario > div {
+    display: none;
+  }
+
+  .compras-tarjeta {
+    padding: 16px;
+  }
+
+  .compras-buscador {
+    flex: 1;
+    min-width: 160px;
+  }
+
+  .compras-tabla {
+    min-width: 700px;
+  }
+}

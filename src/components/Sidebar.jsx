@@ -1,33 +1,34 @@
+import { NavLink } from 'react-router-dom'
+import { RUTAS, PERMISOS } from '../config/rutas'
 
-import "../css/layout.css";
+export default function Sidebar({ rol, abierto, onCerrar }) {
+  const permitidas = PERMISOS[rol] ?? []
 
-export default function Sidebar() {
   return (
-    <aside className="sidebar">
-
-      <div className="brand">
-        <span className="brand-icon">SF</span>
-        <span>StockFácil</span>
+    <aside className={`sidebar ${abierto ? 'abierto' : ''}`}>
+      <div className="sidebar-logo">
+        <span className="sidebar-logo-sf">SF</span>
+        <span className="sidebar-logo-name">StockFácil</span>
       </div>
 
-      <nav className="menu">
-        <a href="#" className="menu-item active">⌂ Resumen</a>
-        <a href="#" className="menu-item">▦ Productos</a>
-        <a href="#" className="menu-item">▤ Inventario</a>
-        <a href="#" className="menu-item">▧ Categorías</a>
-        <a href="#" className="menu-item">♧ Proveedores</a>
-        <a href="#" className="menu-item">↗ Ventas</a>
-        <a href="#" className="menu-item">↙ Compras</a>
-        <a href="#" className="menu-item">▥ Reportes</a>
-        <a href="#" className="menu-item">⚙ Configuración</a>
+      <nav className="sidebar-nav">
+        {RUTAS.filter((r) => permitidas.includes(r.nombre)).map((item) => (
+          <NavLink
+            key={item.ruta}
+            to={item.ruta}
+            onClick={onCerrar}
+            className={({ isActive }) => `sidebar-item ${isActive ? 'activo' : ''}`}
+          >
+            <span className="sidebar-icono">{item.icono}</span>
+            {item.nombre}
+          </NavLink>
+        ))}
       </nav>
 
-      <div className="sidebar-footer">
-        <span>Plan de equipo</span>
+      <div className="sidebar-plan">
+        <small>Plan de equipo</small>
         <strong>Gestión de inventario</strong>
       </div>
-
     </aside>
-  );
+  )
 }
-

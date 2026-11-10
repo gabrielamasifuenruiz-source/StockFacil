@@ -1,0 +1,263 @@
+.ventas-pagina,
+.ventas-pagina * {
+  box-sizing: border-box;
+}
+
+.ventas-pagina {
+  width: 100%;
+  min-width: 0;
+  min-height: 100vh;
+  padding: 24px 32px 48px;
+  background: #f4f9f7;
+  color: #193334;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.ventas-cabecera {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.ventas-cabecera h1 {
+  margin: 0 0 7px;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.ventas-cabecera p {
+  margin: 0;
+  color: #738987;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.ventas-usuario {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.ventas-avatar {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border: 1px solid #dce7e3;
+  border-radius: 13px;
+  background: #fff;
+  color: #007575;
+}
+
+.ventas-usuario strong,
+.ventas-usuario small {
+  display: block;
+}
+
+.ventas-usuario strong {
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+
+.ventas-usuario small {
+  color: #738987;
+  font-size: 11px;
+}
+
+.ventas-tarjeta {
+  min-height: calc(100vh - 155px);
+  padding: 22px;
+  border: 1px solid #dce7e3;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.ventas-tarjeta h2 {
+  margin: 0 0 25px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.ventas-herramientas {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 17px;
+}
+
+.ventas-buscador {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 332px;
+  max-width: 100%;
+  height: 39px;
+  padding: 0 14px;
+  border: 1px solid #dce7e3;
+  border-radius: 9px;
+  background: #f4f9f7;
+  color: #738987;
+}
+
+.ventas-buscador svg {
+  flex-shrink: 0;
+}
+
+.ventas-buscador:focus-within {
+  border-color: #6f9e98;
+  outline: 2px solid #e8f3ef;
+}
+
+.ventas-buscador input {
+  width: 100%;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #193334;
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.ventas-buscador input::placeholder {
+  color: #738987;
+}
+
+.ventas-filtrar,
+.ventas-selector {
+  min-height: 39px;
+  padding: 0 22px;
+  border: 1px solid #dce7e3;
+  border-radius: 9px;
+  background: #fff;
+  color: #006d70;
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.ventas-filtrar {
+  min-width: 98px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ventas-filtrar:hover {
+  background: #e9f3ef;
+}
+
+.ventas-filtrar:focus-visible,
+.ventas-selector:focus-visible {
+  outline: 2px solid #6f9e98;
+  outline-offset: 3px;
+}
+
+.ventas-tabla-contenedor {
+  overflow-x: auto;
+}
+
+.ventas-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 12px;
+}
+
+.ventas-tabla thead {
+  background: #f6faf8;
+}
+
+.ventas-tabla th {
+  height: 43px;
+  padding: 12px 10px;
+  border-bottom: 1px solid #e3ece8;
+  color: #718683;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.ventas-tabla th:first-child {
+  border-top-left-radius: 9px;
+}
+
+.ventas-tabla th:last-child {
+  border-top-right-radius: 9px;
+}
+
+.ventas-tabla td {
+  height: 52px;
+  padding: 12px 10px;
+  border-bottom: 1px solid #e3ece8;
+}
+
+.ventas-tabla td:nth-child(2),
+.ventas-tabla td:nth-child(5) {
+  white-space: nowrap;
+}
+
+.ventas-tabla tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.ventas-tabla tbody tr:hover {
+  background: #fbfdfc;
+}
+
+.ventas-estado {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 70px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.ventas-pagada {
+  background: #e9f3ef;
+  color: #278d72;
+}
+
+.ventas-pendiente {
+  background: #fff3e5;
+  color: #db923c;
+}
+
+.ventas-tabla .ventas-vacio {
+  padding: 30px 10px;
+  text-align: center;
+  color: #738987;
+}
+
+@media (max-width: 768px) {
+  .ventas-pagina {
+    padding: 20px 16px;
+  }
+
+  .ventas-cabecera h1 {
+    font-size: 24px;
+  }
+
+  .ventas-usuario > div {
+    display: none;
+  }
+
+  .ventas-tarjeta {
+    padding: 16px;
+  }
+
+  .ventas-buscador {
+    flex: 1;
+    min-width: 160px;
+  }
+
+  .ventas-tabla {
+    min-width: 740px;
+  }
+}

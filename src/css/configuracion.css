@@ -1,0 +1,20 @@
+.configuracion {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.configuracion-card {
+  min-height: 600px;
+}
+
+/* Estado del usuario */
+.badge.activo {
+  background: #e8f1ee;
+  color: #2f7a5c;
+}
+
+.badge.inactivo {
+  background: #fbe6e6;
+  color: #c95d5d;
+}

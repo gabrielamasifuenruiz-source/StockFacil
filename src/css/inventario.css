@@ -1,0 +1,25 @@
+.inventario {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.inventario-card {
+  min-height: 600px;
+}
+
+/* Tipos de movimiento */
+.badge.entrada {
+  background: #e8f1ee;
+  color: #2f7a5c;
+}
+
+.badge.salida {
+  background: #fbe6e6;
+  color: #c95d5d;
+}
+
+.badge.ajuste {
+  background: #fdf0df;
+  color: #d9a05b;
+}
