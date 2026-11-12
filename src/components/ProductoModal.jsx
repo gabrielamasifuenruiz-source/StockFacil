@@ -2,14 +2,14 @@ import { useState } from 'react'
 
 const CATEGORIAS = ['Abarrotes', 'Lácteos', 'Limpieza', 'Snacks', 'Bebidas']
 
-export default function ProductoModal({ onCerrar, onGuardar }) {
-  const [form, setForm] = useState({
-    nombre: '',
-    sku: '',
-    categoria: '',
-    precio: '',
-    stock: '',
-  })
+export default function ProductoModal({ producto, onCerrar, onGuardar }) {
+const [form, setForm] = useState({
+  nombre: producto?.nombre ?? '',
+  sku: producto?.sku ?? '',
+  categoria: producto?.categoria ?? '',
+  precio: producto?.precio ?? '',
+  stock: producto?.stock ?? '',
+})
   const [errores, setErrores] = useState({})
   const [errorForm, setErrorForm] = useState('')
   const [guardando, setGuardando] = useState(false)
@@ -59,7 +59,7 @@ export default function ProductoModal({ onCerrar, onGuardar }) {
         onSubmit={handleSubmit}
         noValidate
       >
-        <h2>Nuevo producto</h2>
+        <h2>{producto ? 'Editar producto' : 'Nuevo producto'}</h2>
 
         <label htmlFor="nombre">Nombre</label>
         <input id="nombre" name="nombre" value={form.nombre} onChange={cambiar} />

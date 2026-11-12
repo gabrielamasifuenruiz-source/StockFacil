@@ -4,12 +4,12 @@ import { useState } from 'react';
 const ROLES = ['Administrador', 'Almacén', 'Ventas'];
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-export default function UsuarioModal({ onCerrar, onGuardar }) {
+export default function UsuarioModal({ usuario, onCerrar, onGuardar }) {
   const [form, setForm] = useState({
-    nombre: '',
-    correo: '',
-    rol: ''
-  });
+  nombre: usuario?.nombre ?? '',
+  correo: usuario?.correo ?? '',
+  rol: usuario?.rol ?? '',
+})
 
   const [errores, setErrores] = useState({});
   const [errorForm, setErrorForm] = useState('');
@@ -74,7 +74,7 @@ export default function UsuarioModal({ onCerrar, onGuardar }) {
         onSubmit={handleSubmit}
         noValidate
       >
-        <h2>Nuevo usuario</h2>
+        <h2>{usuario ? 'Editar usuario' : 'Nuevo usuario'}</h2>
 
         <label htmlFor="nombre">Nombre</label>
         <input

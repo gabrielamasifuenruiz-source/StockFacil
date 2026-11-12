@@ -1,7 +1,14 @@
 import { useEffect, useState } from 'react'
 import PageHeader from '../components/PageHeader'
 import UsuarioModal from '../components/UsuarioModal'
-import { getUsuarios, crearUsuario } from '../service/configuracionService'
+import { Paginacion, ThOrdenable } from '../components/TablaControles'
+import { useTabla } from '../hooks/useTabla'
+import {
+  getUsuarios,
+  crearUsuario,
+  actualizarUsuario,
+  eliminarUsuario,
+} from '../service/configuracionService'
 import '../css/configuracion.css'
 
 export default function Configuracion() {
@@ -9,28 +16,46 @@ export default function Configuracion() {
   const [busqueda, setBusqueda] = useState('')
   const [filtroRol, setFiltroRol] = useState('Todos')
   const [mostrarFiltro, setMostrarFiltro] = useState(false)
-  const [mostrarModal, setMostrarModal] = useState(false)
+  const [modal, setModal] = useState({ abierto: false, usuario: null })
 
   useEffect(() => {
     getUsuarios().then(setUsuarios)
   }, [])
 
-  const guardarUsuario = async (datos) => {
-    const nuevo = await crearUsuario(datos)
-    setUsuarios((anteriores) => [...anteriores, nuevo])
-    setMostrarModal(false)
-  }
-
   const texto = busqueda.trim().toLowerCase()
 
-  const visibles = usuarios.filter((u) => {
+  const filtrados = usuarios.filter((u) => {
     const coincide =
       u.nombre.toLowerCase().includes(texto) ||
       u.correo.toLowerCase().includes(texto) ||
       u.rol.toLowerCase().includes(texto)
-    const cumpleRol = filtroRol === 'Todos' || u.rol === filtroRol
-    return coincide && cumpleRol
+    return coincide && (filtroRol === 'Todos' || u.rol === filtroRol)
   })
+
+  const tabla = useTabla(filtrados, 5)
+
+  const cerrarModal = () => setModal({ abierto: false, usuario: null })
+
+  const guardar = async (datos) => {
+    if (modal.usuario) {
+      const actualizado = await actualizarUsuario(modal.usuario.id, datos)
+      setUsuarios((ant) => ant.map((u) => (u.id === actualizado.id ? actualizado : u)))
+    } else {
+      const nuevo = await crearUsuario(datos)
+      setUsuarios((ant) => [...ant, nuevo])
+    }
+    cerrarModal()
+  }
+
+  const eliminar = async (usuario) => {
+    if (!window.confirm(`¿Eliminar a ${usuario.nombre}?`)) return
+    try {
+      await eliminarUsuario(usuario.id)
+      setUsuarios((ant) => ant.filter((u) => u.id !== usuario.id))
+    } catch (err) {
+      window.alert(err.message)
+    }
+  }
 
   return (
     <div className="configuracion">
@@ -45,7 +70,7 @@ export default function Configuracion() {
           <button
             type="button"
             className="btn-primario"
-            onClick={() => setMostrarModal(true)}
+            onClick={() => setModal({ abierto: true, usuario: null })}
           >
             + Nuevo usuario
           </button>
@@ -84,15 +109,16 @@ export default function Configuracion() {
         <table className="tabla">
           <thead>
             <tr>
-              <th>Usuario</th>
-              <th>Correo</th>
-              <th>Rol</th>
+              <ThOrdenable campo="nombre" orden={tabla.orden} onOrdenar={tabla.ordenarPor}>Usuario</ThOrdenable>
+              <ThOrdenable campo="correo" orden={tabla.orden} onOrdenar={tabla.ordenarPor}>Correo</ThOrdenable>
+              <ThOrdenable campo="rol" orden={tabla.orden} onOrdenar={tabla.ordenarPor}>Rol</ThOrdenable>
               <th>Último acceso</th>
               <th>Estado</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            {visibles.map((u) => (
+            {tabla.visibles.map((u) => (
               <tr key={u.id}>
                 <td>{u.nombre}</td>
                 <td>{u.correo}</td>
@@ -101,23 +127,49 @@ export default function Configuracion() {
                 <td>
                   <span className={`badge ${u.estado.toLowerCase()}`}>{u.estado}</span>
                 </td>
+                <td className="acciones">
+                  <button
+                    type="button"
+                    className="btn-icono"
+                    aria-label="Editar"
+                    onClick={() => setModal({ abierto: true, usuario: u })}
+                  >
+                    ✎
+                  </button>
+                  <button
+                    type="button"
+                    className="btn-icono peligro"
+                    aria-label="Eliminar"
+                    onClick={() => eliminar(u)}
+                  >
+                    🗑
+                  </button>
+                </td>
               </tr>
             ))}
-            {visibles.length === 0 && (
+            {tabla.total === 0 && (
               <tr>
-                <td colSpan="5" className="tabla-vacia">
+                <td colSpan="6" className="tabla-vacia">
                   No se encontraron usuarios.
                 </td>
               </tr>
             )}
           </tbody>
         </table>
+
+        <Paginacion
+          pagina={tabla.pagina}
+          totalPaginas={tabla.totalPaginas}
+          total={tabla.total}
+          onCambiar={tabla.setPagina}
+        />
       </section>
 
-      {mostrarModal && (
+      {modal.abierto && (
         <UsuarioModal
-          onCerrar={() => setMostrarModal(false)}
-          onGuardar={guardarUsuario}
+          usuario={modal.usuario}
+          onCerrar={cerrarModal}
+          onGuardar={guardar}
         />
       )}
     </div>

@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react'
 import PageHeader from '../components/PageHeader'
 import ProductoModal from '../components/ProductoModal'
-import { getProductos, crearProducto } from '../service/productosService'
+import { Paginacion, ThOrdenable } from '../components/TablaControles'
+import { useTabla } from '../hooks/useTabla'
+import {
+  getProductos,
+  crearProducto,
+  actualizarProducto,
+  eliminarProducto,
+  calcularEstado,
+} from '../service/productosService'
 import '../css/productos.css'
-
-function calcularEstado(stock) {
-  if (stock === 0) return { texto: 'Agotado', clase: 'agotado' }
-  if (stock < 10) return { texto: 'Stock bajo', clase: 'bajo' }
-  return { texto: 'Disponible', clase: 'disponible' }
-}
 
 const formatoPrecio = (n) => `S/ ${n.toFixed(2).replace('.', ',')}`
 
@@ -17,29 +19,43 @@ export default function Productos() {
   const [busqueda, setBusqueda] = useState('')
   const [filtroEstado, setFiltroEstado] = useState('Todos')
   const [mostrarFiltro, setMostrarFiltro] = useState(false)
-  const [mostrarModal, setMostrarModal] = useState(false)
+  const [modal, setModal] = useState({ abierto: false, producto: null })
 
   useEffect(() => {
     getProductos().then(setProductos)
   }, [])
 
-  const guardarProducto = async (datos) => {
-    const nuevo = await crearProducto(datos)
-    setProductos((anteriores) => [...anteriores, nuevo])
-    setMostrarModal(false)
-  }
-
   const texto = busqueda.trim().toLowerCase()
 
-  const visibles = productos.filter((p) => {
+  const filtrados = productos.filter((p) => {
     const coincide =
       p.nombre.toLowerCase().includes(texto) ||
       p.sku.toLowerCase().includes(texto) ||
       p.categoria.toLowerCase().includes(texto)
     const estado = calcularEstado(p.stock).texto
-    const cumpleEstado = filtroEstado === 'Todos' || estado === filtroEstado
-    return coincide && cumpleEstado
+    return coincide && (filtroEstado === 'Todos' || estado === filtroEstado)
   })
+
+  const tabla = useTabla(filtrados, 5)
+
+  const cerrarModal = () => setModal({ abierto: false, producto: null })
+
+  const guardar = async (datos) => {
+    if (modal.producto) {
+      const actualizado = await actualizarProducto(modal.producto.id, datos)
+      setProductos((ant) => ant.map((p) => (p.id === actualizado.id ? actualizado : p)))
+    } else {
+      const nuevo = await crearProducto(datos)
+      setProductos((ant) => [...ant, nuevo])
+    }
+    cerrarModal()
+  }
+
+  const eliminar = async (producto) => {
+    if (!window.confirm(`¿Eliminar "${producto.nombre}"?`)) return
+    await eliminarProducto(producto.id)
+    setProductos((ant) => ant.filter((p) => p.id !== producto.id))
+  }
 
   return (
     <div className="productos">
@@ -54,7 +70,7 @@ export default function Productos() {
           <button
             type="button"
             className="btn-primario"
-            onClick={() => setMostrarModal(true)}
+            onClick={() => setModal({ abierto: true, producto: null })}
           >
             + Nuevo producto
           </button>
@@ -93,16 +109,17 @@ export default function Productos() {
         <table className="tabla">
           <thead>
             <tr>
-              <th>Producto</th>
-              <th>SKU</th>
-              <th>Categoría</th>
-              <th>Precio</th>
-              <th>Stock</th>
+              <ThOrdenable campo="nombre" orden={tabla.orden} onOrdenar={tabla.ordenarPor}>Producto</ThOrdenable>
+              <ThOrdenable campo="sku" orden={tabla.orden} onOrdenar={tabla.ordenarPor}>SKU</ThOrdenable>
+              <ThOrdenable campo="categoria" orden={tabla.orden} onOrdenar={tabla.ordenarPor}>Categoría</ThOrdenable>
+              <ThOrdenable campo="precio" orden={tabla.orden} onOrdenar={tabla.ordenarPor}>Precio</ThOrdenable>
+              <ThOrdenable campo="stock" orden={tabla.orden} onOrdenar={tabla.ordenarPor}>Stock</ThOrdenable>
               <th>Estado</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            {visibles.map((p) => {
+            {tabla.visibles.map((p) => {
               const estado = calcularEstado(p.stock)
               return (
                 <tr key={p.id}>
@@ -114,24 +131,50 @@ export default function Productos() {
                   <td>
                     <span className={`badge ${estado.clase}`}>{estado.texto}</span>
                   </td>
+                  <td className="acciones">
+                    <button
+                      type="button"
+                      className="btn-icono"
+                      aria-label="Editar"
+                      onClick={() => setModal({ abierto: true, producto: p })}
+                    >
+                      ✎
+                    </button>
+                    <button
+                      type="button"
+                      className="btn-icono peligro"
+                      aria-label="Eliminar"
+                      onClick={() => eliminar(p)}
+                    >
+                      🗑
+                    </button>
+                  </td>
                 </tr>
               )
             })}
-            {visibles.length === 0 && (
+            {tabla.total === 0 && (
               <tr>
-                <td colSpan="6" className="tabla-vacia">
+                <td colSpan="7" className="tabla-vacia">
                   No se encontraron productos.
                 </td>
               </tr>
             )}
           </tbody>
         </table>
+
+        <Paginacion
+          pagina={tabla.pagina}
+          totalPaginas={tabla.totalPaginas}
+          total={tabla.total}
+          onCambiar={tabla.setPagina}
+        />
       </section>
 
-      {mostrarModal && (
+      {modal.abierto && (
         <ProductoModal
-          onCerrar={() => setMostrarModal(false)}
-          onGuardar={guardarProducto}
+          producto={modal.producto}
+          onCerrar={cerrarModal}
+          onGuardar={guardar}
         />
       )}
     </div>
